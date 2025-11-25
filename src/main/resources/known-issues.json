@@ -1,2 +1,7 @@
 {
+  "DFCT-001": {
+    "type": "Internal",
+    "assertionPattern": ".*No thanks for you, take it or leave it.*",
+    "description": "testing known issue"
+    }
 }

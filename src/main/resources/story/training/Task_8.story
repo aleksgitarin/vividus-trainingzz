@@ -29,6 +29,7 @@ Scenario: Populate checkout data
 When I click on element located by `className(shopping_cart_badge)`
 When I wait until element located by `caseSensitiveText(Your Cart)` appears
 Then `${current-page-url}` is equal to `https://www.saucedemo.com/cart.html`
+When I COMPARE_AGAINST baseline with name `checkoutstepone`
 When I click on element located by `id(checkout)`
 When I wait until element located by `caseSensitiveText(Checkout: Your Information)` appears
 Then `${current-page-url}` is equal to `https://www.saucedemo.com/checkout-step-one.html`
@@ -41,6 +42,7 @@ Scenario: Validate order summary and complete order
 When I click on element located by `id(continue)`
 When I wait until element located by `caseSensitiveText(Checkout: Overview)` appears
 Then `${current-page-url}` is equal to `https://www.saucedemo.com/checkout-step-two.html`
+When I COMPARE_AGAINST baseline with name `checkoutsteptwo`
 When I save text of element located by `xpath((//div[@class='inventory_item_price'])[1])` to SCENARIO variable `itemPrice1`
 When I save text of element located by `xpath((//div[@class='inventory_item_price'])[2])` to SCENARIO variable `itemPrice2`
 Given I initialize SCENARIO variable `itemPrice1Final` with value `#{eval("${itemPrice1}".substring(1))}`
@@ -57,14 +59,13 @@ When I save text of element located by `xpath(//div[@class='summary_total_label'
 Given I initialize SCENARIO variable `totalFinal` with value `#{eval("${total}".replace('Total: $',''))}`
 Then `#{eval("${calculated-totalRounded}")}` is equal to `#{eval("${totalFinal}")}`
 When I click on element located by `id(finish)`
+When I wait until element located by `caseSensitiveText(Checkout: Complete!)` appears
+Then `${current-page-url}` is equal to `https://www.saucedemo.com/checkout-complete.html`
 When I take screenshot
 
 
 Scenario: Complete checkout process
-Given I initialize SCENARIO variable `expectedMessage` with value `#{loadResource(/data/message.txt)}`
-When I wait until element located by `caseSensitiveText(Checkout: Complete!)` appears
-Then `${current-page-url}` is equal to `https://www.saucedemo.com/checkout-complete.html`
 When I save text of element located by `xpath(//h2[@class="complete-header"])` to SCENARIO variable `thankYouMessage`
-Then `#{eval(${thankYouMessage})` is equal to `#{eval(${thankYouMessage})`
+Given I initialize SCENARIO variable `expectedMessage` with value `#{loadResource(/data/message.txt)}`
+Then `${thankYouMessage}` is equal to `${expectedMessage}`
 When I take screenshot
-
