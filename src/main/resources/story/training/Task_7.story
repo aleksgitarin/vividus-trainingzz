@@ -37,7 +37,7 @@ When I wait until element located by `caseSensitiveText(Checkout: Your Informati
 Then `${current-page-url}` is equal to `https://www.saucedemo.com/checkout-step-one.html`
 When I enter `#{generate(Name.firstName)}` in field located by `id(first-name)`
 When I enter `#{generate(Lorem.characters '10' 'true')}` in field located by `id(last-name)`
-When I enter `#{toUpperCase(#{generate(Lorem.characters '3')})}-#{generate(Lorem.characters '5')}` in field located by `id(postal-code)`
+When I enter `#{toUpperCase(#{generate(Text.text '3')})}-#{generate(Number.digits '5')}` in field located by `id(postal-code)`
 When I take screenshot
 
 Scenario: Complete checkout process
@@ -49,5 +49,5 @@ When I click on element located by `id(finish)`
 When I wait until element located by `caseSensitiveText(Checkout: Complete!)` appears
 Then `${current-page-url}` is equal to `https://www.saucedemo.com/checkout-complete.html`
 When I save text of element located by `xpath(//h2[@class="complete-header"])` to SCENARIO variable `thankYouMessage`
-Then `#{eval(${thankYouMessage})` is equal to `#{eval(${thankYouMessage})`
+Then `#{eval(${thankYouMessage})` is equal to `#{eval(${expectedMessage})`
 When I take screenshot
